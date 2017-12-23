@@ -1,5 +1,9 @@
-const React = require('react');
-const ReactDOM = require('react-dom');
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { Provider } from 'react-redux'
+import { createStore } from 'redux'
+import clothesStoreApp from './reducers'
+import * as actions from './actions/actions';
 
 class Square extends React.Component {
     render() {
@@ -59,9 +63,22 @@ class Square extends React.Component {
   }
   
   // ========================================
+  let store = createStore(clothesStoreApp)
+
+  const unsubscribe = store.subscribe(() =>
+    console.log(store.getState())
+  )
   
+  // Dispatch some actions
+  store.dispatch(actions.viewAllCategories());
+  store.dispatch(actions.viewNextPage(1));
+  store.dispatch(actions.viewSpecificCategory('hats'));
+  store.dispatch(actions.viewPreviousPage(2));
+
   ReactDOM.render(
-    <Game />,
+    <Provider store={store}>
+      <Game />
+    </Provider>,
     document.getElementById('root')
   );
   
