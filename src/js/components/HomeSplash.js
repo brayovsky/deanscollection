@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { config } from '../config';
 
 class HomeSplash extends Component {
   constructor(props){
@@ -20,7 +21,7 @@ HomeSplash.propTypes = {
 };
 
 HomeSplash.defaultProps = {
-  imageSrc: 'images/deanslgwhite.png',
+  imageSrc: config.imagesUrl,
 };
 
 export default HomeSplash;
