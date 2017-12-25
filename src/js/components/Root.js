@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import HomeSplash from './HomeSplash';
 import ClothesGrid from './ClothesGrid';
+import Categories from './Categories';
 
 class Root extends Component{
   constructor(props){
@@ -11,6 +12,7 @@ class Root extends Component{
     return(
       <div className="main">
         <HomeSplash />
+        <Categories />
         <ClothesGrid />
         <p>copyright (c) {new Date().getFullYear()}</p>
       </div>

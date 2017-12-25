@@ -1,3 +1,6 @@
-const apiConstants = {
-  ALL_CLOTHES: '/api/v1/',
+export default {
+  endpoints: {
+    posts: 'posts',
+    categories: 'categories',
+  }
 };

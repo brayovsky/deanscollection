@@ -2,19 +2,25 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import clothesStoreApp from './reducers';
-import Root from './components/Root'
+import Root from './components/Root';
+import { getAllCategories } from './actions/actions';
+import thunkMiddleware from 'redux-thunk'
+import { createLogger } from 'redux-logger'
 
-let store = createStore(clothesStoreApp);
+const loggerMiddleWare = createLogger();
+const store = createStore(
+  clothesStoreApp, 
+  applyMiddleware(thunkMiddleware, loggerMiddleWare));
 
-const areWeIn = () => console.log('in');
+store.dispatch(getAllCategories());
 
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
       <div>
-        <Route path='/' component={Root} componentDidMount={areWeIn}/>
+        <Route path='/' component={Root}/>
       </div>
     </BrowserRouter>
   </Provider>,

@@ -1,4 +1,10 @@
 import { actionTypes } from '../constants/actionTypes';
+import { callEndpoint } from '../utils/api';
+import config from '../config';
+import * as path from 'path-browserify';
+import apiConstants from '../constants/api'
+import categories from '../reducers/categories';
+
 
 export const viewNextPage = (currentPage) => {
   return {
@@ -29,3 +35,21 @@ export const viewAllCategories = () => {
     category: 'all',
   }
 };
+
+export const finishFetchCategories = (categories) => {
+  return {
+    type: actionTypes.FETCH_ALL_CATEGORIES,
+    allCategories: categories,
+  };
+}
+
+export const getAllCategories = () => {
+  return (dispatch) => {
+    // Get all categories
+    const categoriesEndpoint = path.join(config.apiUrl, apiConstants.endpoints.categories);
+    const allCategories = callEndpoint(categoriesEndpoint).
+    then((categories) => {
+      dispatch(categories);
+    });
+  };
+}
