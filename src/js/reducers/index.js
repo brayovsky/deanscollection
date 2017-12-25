@@ -1,12 +1,11 @@
 import { combineReducers } from 'redux';
 import categories from './categories';
 import pages from './pages';
-import { routerReducer } from 'react-router-redux';
+// import { routerReducer } from 'react-router-redux';
 
 const clothesStoreApp = combineReducers({
   categories,
   pages,
-  routing: routerReducer,
 });
 
 export default clothesStoreApp;
