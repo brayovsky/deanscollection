@@ -1,7 +1,7 @@
-import * as path from 'path-browserify';
+import urljoin from 'url-join';
 
 export default {
-  apiUrl: path.join(window.location.origin, 'wp/wp-json/wp/v2'),
+  apiUrl: urljoin(window.location.origin, 'wp/wp-json/wp/v2'),
   baseUrl: window.location.origin,
-  imagesUrl: path.join(window.location.origin, 'images'),
+  imagesUrl: urljoin(window.location.origin, 'images'),
 };

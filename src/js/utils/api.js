@@ -1,12 +1,12 @@
 import config from '../config';
-import * as path from 'path-browserify';
+import urljoin from 'url-join';
 import { mapJsonToUrlParams } from './lib/adapters/apiAdapter';
 
 export function callEndpoint(endpoint, params = null) {
   let url = endpoint;
   if(params){
     const paramQuery = mapJsonToUrlParams(params);
-    url = path.join(url ,params)
+    url = urljoin(url ,params)
   }
   return fetch(url).then((response) => response.json())
     .catch(console.error);

@@ -1,10 +1,9 @@
 import { actionTypes } from '../constants/actionTypes';
 import { callEndpoint } from '../utils/api';
 import config from '../config';
-import * as path from 'path-browserify';
+import urljoin from 'url-join';
 import apiConstants from '../constants/api'
 import categories from '../reducers/categories';
-
 
 export const viewNextPage = (currentPage) => {
   return {
@@ -46,7 +45,7 @@ export const finishFetchCategories = (categories) => {
 export const getAllCategories = () => {
   return (dispatch) => {
     // Get all categories
-    const categoriesEndpoint = path.join(config.apiUrl, apiConstants.endpoints.categories);
+    const categoriesEndpoint = urljoin(config.apiUrl, apiConstants.endpoints.categories);
     const allCategories = callEndpoint(categoriesEndpoint).
     then((categories) => {
       dispatch(categories);
