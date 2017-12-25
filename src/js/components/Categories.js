@@ -52,7 +52,7 @@ Categories.defaultProps = {
 
 const mapStateToProps = (state) => {
   return {
-    categories: state.allCategories,
+    categories: state.categories.allCategories,
   };
 };
 

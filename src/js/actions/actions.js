@@ -48,7 +48,7 @@ export const getAllCategories = () => {
     const categoriesEndpoint = urljoin(config.apiUrl, apiConstants.endpoints.categories);
     const allCategories = callEndpoint(categoriesEndpoint).
     then((categories) => {
-      dispatch(categories);
+      dispatch(finishFetchCategories(categories));
     });
   };
 }
