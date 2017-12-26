@@ -8,6 +8,5 @@ export function callEndpoint(endpoint, params = null) {
     const paramQuery = mapJsonToUrlParams(params);
     url = urljoin(url ,params)
   }
-  return fetch(url).then((response) => response.json())
-    .catch(console.error);
+  return fetch(url).then((response) => response.json(), (error) => Error('whoopsy'));
 };
