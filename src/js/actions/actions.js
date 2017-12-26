@@ -35,20 +35,39 @@ export const viewAllCategories = () => {
   }
 };
 
+export const fetchingCategories = () => {
+  return {
+    type: actionTypes.FETCHING_CATEGORIES,
+  }
+}
+
+export const errorFetchingCategories = () => {
+  return {
+    type: actionTypes.ERROR_FETCHING_CATEGORIES,
+  }
+}
+
 export const finishFetchCategories = (categories) => {
   return {
-    type: actionTypes.FETCH_ALL_CATEGORIES,
+    type: actionTypes.FETCHED_ALL_CATEGORIES,
     allCategories: categories,
   };
 }
 
 export const getAllCategories = () => {
   return (dispatch) => {
+    dispatch(fetchingCategories());
     // Get all categories
     const categoriesEndpoint = urljoin(config.apiUrl, apiConstants.endpoints.categories);
     const allCategories = callEndpoint(categoriesEndpoint).
-    then((categories) => {
-      dispatch(finishFetchCategories(categories));
+    then((categoriesOrError) => {
+      if (categoriesOrError.message && categoriesOrError.message === 'whoopsy'){
+        dispatch(errorFetchingCategories());
+      }
+      else{
+        const categories = categoriesOrError;
+        dispatch(finishFetchCategories(categories));
+      }
     });
   };
 }
