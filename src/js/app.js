@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import clothesStoreApp from './reducers';
 import Root from './components/Root';
-import { getAllCategories } from './actions/actions';
+import { getAllCategories, showPostsFromThisCategory } from './actions/actions';
 import thunkMiddleware from 'redux-thunk'
 import { createLogger } from 'redux-logger'
 
@@ -15,6 +15,7 @@ const store = createStore(
   applyMiddleware(thunkMiddleware, loggerMiddleWare));
 
 store.dispatch(getAllCategories());
+store.dispatch(showPostsFromThisCategory('all'));
 
 ReactDOM.render(
   <Provider store={store}>
