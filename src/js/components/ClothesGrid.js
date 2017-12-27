@@ -6,6 +6,8 @@ import Grid from 'material-ui/Grid';
 import Paper from 'material-ui/Paper';
 import { connect } from 'react-redux';
 import { CircularProgress } from 'material-ui/Progress';
+import Card from 'material-ui/Card/Card';
+import Clothe from './Clothe';
 
 class ClothesGrid extends React.Component {
   constructor(props){
@@ -17,12 +19,12 @@ class ClothesGrid extends React.Component {
     const { classes } = this.props;
     return (
       <Grid item xs={12}>
-        <Grid container justify="center" spacing={Number(16)}>
+        <Grid container justify="center" spacing={Number(40)}>
           { posts.map(post => (
             <Grid key={post.id} item xs={12} sm={4}>
-              <Paper className={classes.paper} title={post.title.rendered}>
-                <p>{ post._links['wp:featuredmedia'][0].href }</p>
-              </Paper>
+              <Card>
+                <Clothe mediaEndpoint={post._links['wp:featuredmedia'][0].href} />
+              </Card>
             </Grid>
           ))}
         </Grid>
@@ -53,7 +55,7 @@ class ClothesGrid extends React.Component {
     return (
       <Grid container alignItems="center" className={classes.root}>
         {this.props.isFetching ? this.showLoadingIcon() : this.showCards() }
-        {this.props.errorFetching ? this.showErrorText() : '' }
+        {this.props.errorFetching ? this.showErrorText() : <p></p> }
       </Grid>
     );
   }
