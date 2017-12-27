@@ -14,10 +14,9 @@ import { CircularProgress } from 'material-ui/Progress';
 class Categories extends React.Component {
   constructor(props){
     super(props);
-    // this.showLoadingIcon = this.showLoadingIcon.bind(this);
 
     this.state = {
-      categoryValue: 'Category',
+      categoryValue: 'all',
       dialogOpen: false,
       isLoading: false,
     }
@@ -57,6 +56,7 @@ class Categories extends React.Component {
             error={this.props.errorFetching}
             renderValue={value => this.props.errorFetching ? 'Error!' : value }
           >
+            <MenuItem key='all' value={'all'}>All</MenuItem>
             {
               this.props.categories.map(category => <MenuItem key={category.id} value={category.slug}>{category.name}</MenuItem>)
             }
