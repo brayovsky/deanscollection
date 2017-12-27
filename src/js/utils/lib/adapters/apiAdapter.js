@@ -4,9 +4,13 @@ export const mapJsonToUrlParams = (params) => {
   if (typeof params !== 'object'){
     return '';
   }
+  
   let paramQuery = '';
-  _.forOwn(params, (value, key) => {
-    paramQuery += `${key}=${value}&`
-  });
+  for (const param in params) {
+    if (params.hasOwnProperty(param)) {
+      console.log(`param`);
+      paramQuery += `${param}=${params[param]}&`;
+    } 
+  }
   return `?${paramQuery}`;
 };
