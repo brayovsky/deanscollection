@@ -21,17 +21,40 @@ export const viewPreviousPage = (currentPage) => {
   }
 };
 
-export const viewSpecificCategory = (category) => {
+export const fetchingPosts = () => {
   return {
-    type: actionTypes.VIEW_SPECIFIC_CATEGORY,
-    category,
+    type: actionTypes.FETCHING_POSTS,
   }
-};
+}
 
-export const viewAllCategories = () => {
+export const errorFetchingPosts = () => {
   return {
-    type: actionTypes.VIEW_ALL_CATEGORIES,
-    category: 'all',
+    type: actionTypes.ERROR_FETCHING_POSTS,
+  }
+}
+
+export const finishFecthingPosts = (posts) => {
+  return {
+    type: actionTypes.FINISH_FETCHING_POSTS,
+    posts,
+  }
+}
+
+export const showPostsFromThisCategory = (category) => {
+  return (dispatch) => {
+    dispatch(fetchingPosts);
+    // fetch posts async
+    const postsEndpoint = urljoin(config.apiUrl, apiConstants.endpoints.posts);
+    const activeCategory = category === 'all' ? '' : category;
+    const params = {per_page: 9, category};
+    callEndpoint(postsEndpoint, params).then((postsOrError) =>{
+      if (postsOrError.message && postsOrError.message === 'whoopsy'){
+        dispatch(errorFetchingPosts());
+      } else {
+        const posts = postsOrError;
+        dispatch(finishFecthingPosts(posts));
+      }
+    });
   }
 };
 
@@ -57,14 +80,14 @@ export const finishFetchCategories = (categories) => {
 export const getAllCategories = () => {
   return (dispatch) => {
     dispatch(fetchingCategories());
-    // Get all categories
+    // fetch categories async
     const categoriesEndpoint = urljoin(config.apiUrl, apiConstants.endpoints.categories);
-    const allCategories = callEndpoint(categoriesEndpoint).
+    callEndpoint(categoriesEndpoint).
     then((categoriesOrError) => {
       if (categoriesOrError.message && categoriesOrError.message === 'whoopsy'){
         dispatch(errorFetchingCategories());
       }
-      else{
+      else {
         const categories = categoriesOrError;
         dispatch(finishFetchCategories(categories));
       }
