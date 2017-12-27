@@ -6,7 +6,7 @@ export const mapJsonToUrlParams = (params) => {
   }
   let paramQuery = '';
   _.forOwn(params, (value, key) => {
-    param += `${key}=${value}&`
+    paramQuery += `${key}=${value}&`
   });
   return `?${paramQuery}`;
 };
