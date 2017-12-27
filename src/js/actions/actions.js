@@ -46,7 +46,7 @@ export const showPostsFromThisCategory = (category) => {
     // fetch posts async
     const postsEndpoint = urljoin(config.apiUrl, apiConstants.endpoints.posts);
     const activeCategory = category === 'all' ? '' : category;
-    const params = {per_page: 9, category};
+    const params = {per_page: 9, category: activeCategory};
     callEndpoint(postsEndpoint, params).then((postsOrError) =>{
       if (postsOrError.message && postsOrError.message === 'whoopsy'){
         dispatch(errorFetchingPosts());

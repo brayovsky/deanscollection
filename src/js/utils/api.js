@@ -6,7 +6,7 @@ export const callEndpoint = (endpoint, params = null) => {
   let url = endpoint;
   if(params){
     const paramQuery = mapJsonToUrlParams(params);
-    url =+ paramQuery;
+    url += paramQuery;
   }
   return fetch(url).then((response) => response.json(), (error) => Error('whoopsy'));
 };
