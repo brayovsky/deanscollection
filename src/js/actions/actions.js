@@ -42,7 +42,7 @@ export const finishFecthingPosts = (posts) => {
 
 export const showPostsFromThisCategory = (category) => {
   return (dispatch) => {
-    dispatch(fetchingPosts);
+    dispatch(fetchingPosts());
     // fetch posts async
     const postsEndpoint = urljoin(config.apiUrl, apiConstants.endpoints.posts);
     const activeCategory = category === 'all' ? '' : category;
