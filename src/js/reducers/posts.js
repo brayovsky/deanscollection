@@ -1,7 +1,12 @@
 const posts = (state = {}, action) => {
   switch (action.type) {
     case 'FINISH_FETCHING_POSTS':
-      return Object.assign({}, state, { posts: action.posts, isFetching: false, errorFetching: false })
+      return Object.assign({}, state, { 
+        posts: action.posts,
+        isFetching: false,
+        errorFetching: false,
+        activeCategory: action.activeCategory
+      })
     case 'FETCHING_POSTS':
       return Object.assign({}, state, {isFetching: true, errorFetching: false})
     case 'ERROR_FETCHING_POSTS':
