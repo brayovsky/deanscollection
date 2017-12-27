@@ -33,10 +33,11 @@ export const errorFetchingPosts = () => {
   }
 }
 
-export const finishFecthingPosts = (posts) => {
+export const finishFecthingPosts = (posts, activeCategory) => {
   return {
     type: actionTypes.FINISH_FETCHING_POSTS,
     posts,
+    activeCategory,
   }
 }
 
@@ -45,14 +46,13 @@ export const showPostsFromThisCategory = (category) => {
     dispatch(fetchingPosts());
     // fetch posts async
     const postsEndpoint = urljoin(config.apiUrl, apiConstants.endpoints.posts);
-    const activeCategory = category === 'all' ? '' : category;
-    const params = {per_page: 9, category: activeCategory};
+    const params = category === 'all' ? {per_page: 9} : {per_page: 9, categories: category}
     callEndpoint(postsEndpoint, params).then((postsOrError) =>{
       if (postsOrError.message && postsOrError.message === 'whoopsy'){
         dispatch(errorFetchingPosts());
       } else {
         const posts = postsOrError;
-        dispatch(finishFecthingPosts(posts));
+        dispatch(finishFecthingPosts(posts, category));
       }
     });
   }
@@ -75,6 +75,12 @@ export const finishFetchCategories = (categories) => {
     type: actionTypes.FETCHED_ALL_CATEGORIES,
     allCategories: categories,
   };
+}
+
+export const activeCategoryChanged = (newCategory) => {
+  return (dispatch) => {
+    dispatch(showPostsFromThisCategory(newCategory));
+  }
 }
 
 export const getAllCategories = () => {
