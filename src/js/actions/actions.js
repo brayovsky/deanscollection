@@ -49,12 +49,10 @@ export const showPostsFromThisCategory = (category, page, updating = false) => {
     const postsEndpoint = urljoin(config.apiUrl, apiConstants.endpoints.posts);
     const params = category === 'all' ? {per_page: 12, page} : {per_page: 12, categories: category, page}
     callEndpoint(postsEndpoint, params).then((postsOrError) => {
-      console.log('dgg', postsOrError);
-      if (postsOrError.message && postsOrError.message === 'whoopsy'){
+      if ((postsOrError.message && postsOrError.message === 'whoopsy') || postsOrError.status !== 200){
         dispatch(errorFetchingPosts());
       } else {
         const response = postsOrError;
-        console.log(response);
         updating ? dispatch(finishFetchingConsequentPages(response, page)) : dispatch(finishFecthingPosts(response, category, page));
       }
     });
@@ -74,7 +72,6 @@ export const errorFetchingCategories = () => {
 }
 
 export const finishFetchCategories = (response) => {
-  console.log('response is', response);
   return {
     type: actionTypes.FETCHED_ALL_CATEGORIES,
     response,
@@ -108,8 +105,7 @@ export const getAllCategories = () => {
     const categoriesEndpoint = urljoin(config.apiUrl, apiConstants.endpoints.categories);
     callEndpoint(categoriesEndpoint).
     then((categoriesOrError) => {
-      console.log('dgg', categoriesOrError);
-      if (categoriesOrError.message && categoriesOrError.message === 'whoopsy'){
+      if ((categoriesOrError.message && categoriesOrError.message === 'whoopsy') || categoriesOrError.status !== 200){
         dispatch(errorFetchingCategories());
       }
       else {

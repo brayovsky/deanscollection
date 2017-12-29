@@ -17,7 +17,7 @@ class Clothe extends React.Component{
 
   componentDidMount() {
     callEndpoint(this.props.mediaEndpoint).then((response) => {
-      if(response.message && response.message === 'whoopsy'){
+      if((response.message && response.message === 'whoopsy') || response.status !== 200){
         this.setState({isLoading: false, errorLoading: true})
       } else {
         this.setState({
