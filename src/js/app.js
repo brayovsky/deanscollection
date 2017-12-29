@@ -15,7 +15,7 @@ const store = createStore(
   applyMiddleware(thunkMiddleware, loggerMiddleWare));
 
 store.dispatch(getAllCategories());
-store.dispatch(showPostsFromThisCategory('all'));
+store.dispatch(showPostsFromThisCategory('all', 1));
 
 ReactDOM.render(
   <Provider store={store}>
