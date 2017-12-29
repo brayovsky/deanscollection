@@ -15,8 +15,7 @@ class ClothesGrid extends React.Component {
     super(props);
     this.handleScroll = this.handleScroll.bind(this);
     this.state = {
-      alreadyFetchedExtraImages: props.alreadyFetchedExtraImages,
-      fetch: this.props.currentPage,
+      fetch: props.currentPage,
     }
   }
   componentDidMount(){
@@ -64,12 +63,14 @@ class ClothesGrid extends React.Component {
   }
 
   handleScroll(event) {
+    if (this.props.currentPage >= this.props.totalPages){
+      return;
+    }
     this.setState({fetch: ++this.state.fetch});
     const documentHeight = document.documentElement.scrollHeight - window.innerHeight;
     const scrollPosition = document.documentElement.scrollTop;
     const scrollPercentage = (scrollPosition/documentHeight) * 100;
     if(scrollPercentage > 99.7){
-      this.setState({alreadyFetchedExtraImages: true});
       this.props.fetchMoreImages(this.props.activeCategoryId, this.props.currentPage);
     }
   }
@@ -94,6 +95,7 @@ ClothesGrid.propTypes = {
   fetchMoreImages: PropTypes.func.isRequired,
   activeCategoryId: PropTypes.string.isRequired,
   currentPage: PropTypes.number.isRequired,
+  totalPages: PropTypes.number.isRequired,
 };
 
 ClothesGrid.defaultProps = {
@@ -103,6 +105,7 @@ ClothesGrid.defaultProps = {
   fetchMoreImages: (cat, page) => {},
   activeCategoryId: 'all',
   currentPage: 1,
+  totalPages: 1,
 };
 
 const mapStateToProps = (state) => {
@@ -112,6 +115,7 @@ const mapStateToProps = (state) => {
     errorFetching: state.posts.errorFetching,
     activeCategoryId: String(state.posts.activeCategory),
     currentPage: state.posts.page,
+    totalPages: Number(state.posts.totalPages),
   };
 };
 

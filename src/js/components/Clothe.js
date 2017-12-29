@@ -16,12 +16,12 @@ class Clothe extends React.Component{
   }
 
   componentDidMount() {
-    callEndpoint(this.props.mediaEndpoint).then((mediaOrError) => {
-      if(mediaOrError.message && mediaOrError.message === 'whoopsy'){
+    callEndpoint(this.props.mediaEndpoint).then((response) => {
+      if(response.message && response.message === 'whoopsy'){
         this.setState({isLoading: false, errorLoading: true})
       } else {
         this.setState({
-          imageHref: mediaOrError.media_details.sizes.full.source_url,
+          imageHref: response.body.media_details.sizes.full.source_url,
           isLoading: false, 
           errorLoading: false
         });
@@ -39,7 +39,7 @@ class Clothe extends React.Component{
 
   showMedia(){
     return (
-      this.state.errorLoading ? <p style={{color: red}}> :( error loading </p> :
+      this.state.errorLoading ? <p style={{color: 'red'}}> :( error loading </p> :
         <CardMedia style={{width: '100%'}}>
           <img src={this.state.imageHref} width="100%" />
         </CardMedia>

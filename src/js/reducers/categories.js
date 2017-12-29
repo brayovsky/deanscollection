@@ -1,7 +1,9 @@
 const categories = (state = {}, action) => {
   switch (action.type) {
     case 'FETCHED_ALL_CATEGORIES':
-      return Object.assign({}, state, { allCategories: action.allCategories, isFetching: false, errorFetching: false })
+      return Object.assign({}, state, { allCategories: action.response.body,
+        isFetching: false,
+        errorFetching: false })
     case 'FETCHING_CATEGORIES':
       return Object.assign({}, state, {isFetching: true, errorFetching: false})
     case 'ERROR_FETCHING_CATEGORIES':

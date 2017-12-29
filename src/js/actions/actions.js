@@ -33,10 +33,10 @@ export const errorFetchingPosts = () => {
   }
 }
 
-export const finishFecthingPosts = (posts, activeCategory, page) => {
+export const finishFecthingPosts = (response, activeCategory, page) => {
   return {
     type: actionTypes.FINISH_FETCHING_POSTS,
-    posts,
+    response,
     activeCategory,
     page,
   }
@@ -48,13 +48,14 @@ export const showPostsFromThisCategory = (category, page, updating = false) => {
     // fetch posts async
     const postsEndpoint = urljoin(config.apiUrl, apiConstants.endpoints.posts);
     const params = category === 'all' ? {per_page: 12, page} : {per_page: 12, categories: category, page}
-    callEndpoint(postsEndpoint, params).then((postsOrError) =>{
+    callEndpoint(postsEndpoint, params).then((postsOrError) => {
+      console.log('dgg', postsOrError);
       if (postsOrError.message && postsOrError.message === 'whoopsy'){
         dispatch(errorFetchingPosts());
       } else {
-        const posts = postsOrError;
-        console.log(posts);
-        updating ? dispatch(finishFetchingConsequentPages(posts, page)) : dispatch(finishFecthingPosts(posts, category, page));
+        const response = postsOrError;
+        console.log(response);
+        updating ? dispatch(finishFetchingConsequentPages(response, page)) : dispatch(finishFecthingPosts(response, category, page));
       }
     });
   }
@@ -72,10 +73,11 @@ export const errorFetchingCategories = () => {
   }
 }
 
-export const finishFetchCategories = (categories) => {
+export const finishFetchCategories = (response) => {
+  console.log('response is', response);
   return {
     type: actionTypes.FETCHED_ALL_CATEGORIES,
-    allCategories: categories,
+    response,
   };
 }
 
@@ -91,10 +93,10 @@ export const fetchConsequentPages = (currentCategory, currentPage) => {
   }
 }
 
-export const finishFetchingConsequentPages = (posts, page) => {
+export const finishFetchingConsequentPages = (response, page) => {
   return {
     type: actionTypes.FINISH_FETCHING_CONSEQUENT,
-    posts,
+    response,
     page,
   }
 }
@@ -106,12 +108,13 @@ export const getAllCategories = () => {
     const categoriesEndpoint = urljoin(config.apiUrl, apiConstants.endpoints.categories);
     callEndpoint(categoriesEndpoint).
     then((categoriesOrError) => {
+      console.log('dgg', categoriesOrError);
       if (categoriesOrError.message && categoriesOrError.message === 'whoopsy'){
         dispatch(errorFetchingCategories());
       }
       else {
-        const categories = categoriesOrError;
-        dispatch(finishFetchCategories(categories));
+        const response = categoriesOrError;
+        dispatch(finishFetchCategories(response));
       }
     });
   };
