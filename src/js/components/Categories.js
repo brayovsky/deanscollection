@@ -43,8 +43,6 @@ class Categories extends React.Component {
         return true
       }
     });
-    console.log('id is ', id)
-    console.log('activecat', activeCategory);
     return activeCategory[0].name;
   }
 

@@ -8,13 +8,32 @@ import { connect } from 'react-redux';
 import { CircularProgress } from 'material-ui/Progress';
 import Card from 'material-ui/Card/Card';
 import Clothe from './Clothe';
-
+import { fetchConsequentPages } from '../actions/actions';
+const _ = require('lodash');
 class ClothesGrid extends React.Component {
   constructor(props){
     super(props);
+    this.handleScroll = this.handleScroll.bind(this);
+    this.state = {
+      alreadyFetchedExtraImages: props.alreadyFetchedExtraImages,
+      fetch: 0,
+    }
+  }
+  componentDidMount(){
+    console.log('component mounting');
+    window.addEventListener('scroll', _.throttle(this.handleScroll, 1000));
   }
 
-  showCards() {
+  componentWillUnmount(){
+    console.log('component unmounting');    
+    window.removeEventListener('scroll', _.throttle(this.handleScroll, 1000));
+  }
+
+  componentDidUpdate(){
+    console.log('component updating');  
+  }
+
+  showCards() {   
     const { posts } = this.props;
     const { classes } = this.props;
     return (
@@ -50,11 +69,23 @@ class ClothesGrid extends React.Component {
     );
   }
 
+  handleScroll(event) {
+    this.setState({fetch: ++this.state.fetch});
+    const documentHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const scrollPosition = document.documentElement.scrollTop;
+    const scrollPercentage = (scrollPosition/documentHeight) * 100;
+    if(scrollPercentage > 99.7){
+      this.setState({alreadyFetchedExtraImages: true});
+      this.props.fetchMoreImages(this.props.activeCategoryId, this.props.currentPage);
+    }
+  }
+
   render() {
     const { classes } = this.props;
     return (
       <Grid container alignItems="center" className={classes.root}>
-        {this.props.isFetching ? this.showLoadingIcon() : this.showCards() }
+        {/* doing first fetch */}
+        { this.state.fetch === 0  && this.props.isFetching ? this.showLoadingIcon() : this.showCards() }
         {this.props.errorFetching ? this.showErrorText() : <p></p> }
       </Grid>
     );
@@ -66,12 +97,18 @@ ClothesGrid.propTypes = {
   posts: PropTypes.arrayOf(PropTypes.object).isRequired,
   isFetching: PropTypes.bool.isRequired,
   errorFetching: PropTypes.bool.isRequired,
+  fetchMoreImages: PropTypes.func.isRequired,
+  activeCategoryId: PropTypes.string.isRequired,
+  currentPage: PropTypes.number.isRequired,
 };
 
 ClothesGrid.defaultProps = {
-  posts: [{id:'fake', title: {rendered: 'title'}, _links: { 'wp:featuredmedia': 'heyall' }}],
+  posts: [{id:'fake', _links: { 'wp:featuredmedia': 'heyall' }}],
   isFetching: false,
   errorFetching: false,
+  fetchMoreImages: (cat, page) => {},
+  activeCategoryId: 'all',
+  currentPage: 1,
 };
 
 const mapStateToProps = (state) => {
@@ -79,7 +116,17 @@ const mapStateToProps = (state) => {
     posts: state.posts.posts,
     isFetching: state.posts.isFetching,
     errorFetching: state.posts.errorFetching,
+    activeCategoryId: String(state.posts.activeCategory),
+    currentPage: state.posts.page,
   };
 };
 
-export default withStyles(styles)(connect(mapStateToProps)(ClothesGrid));
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchMoreImages: (currentCategory, currentPage) => {
+      dispatch(fetchConsequentPages(currentCategory, currentPage))
+    },
+  }
+}
+
+export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(ClothesGrid));
