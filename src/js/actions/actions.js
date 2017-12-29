@@ -87,7 +87,7 @@ export const getAllCategories = () => {
     dispatch(fetchingCategories());
     // fetch categories async
     const categoriesEndpoint = urljoin(config.apiUrl, apiConstants.endpoints.categories);
-    callEndpoint(categoriesEndpoint).
+    callEndpoint(categoriesEndpoint, {per_page: 100}).
     then((categoriesOrError) => {
       if ((categoriesOrError.message && categoriesOrError.message === 'whoopsy') || categoriesOrError.status !== 200){
         dispatch(errorFetchingCategories());
