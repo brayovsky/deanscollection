@@ -12,7 +12,6 @@ class Root extends Component{
       <div className="main">
         <Categories />
         <ClothesGrid />
-        <p>copyright (c) {new Date().getFullYear()}</p>
       </div>
     );
   }
