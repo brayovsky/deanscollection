@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import HomeSplash from './HomeSplash';
 import ClothesGrid from './ClothesGrid';
 import Categories from './Categories';
 
@@ -11,7 +10,6 @@ class Root extends Component{
   render(){
     return(
       <div className="main">
-        <HomeSplash />
         <Categories />
         <ClothesGrid />
         <p>copyright (c) {new Date().getFullYear()}</p>
