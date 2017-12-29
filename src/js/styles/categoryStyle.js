@@ -7,4 +7,7 @@ export default theme => ({
     margin: theme.spacing.unit,
     width: '100%',
   },
+  spinner: {
+    margin: `0 73px`,
+  }
 });

@@ -28,10 +28,17 @@ class Categories extends React.Component {
   };
 
   showLoadingIcon(){
+    const { classes } = this.props;
     return (
-      <div style={{position: 'absolute', paddingLeft: 100,}}>
-        <CircularProgress size={50} style={{position: 'absolute', left: '50%', top: '50%', marginTop: -12, marginBottom: -12}} />
-      </div>
+      <Grid item xs={12}>
+        <Grid container justify="center" spacing={Number(40)}>
+            <Grid item xs={12} sm={4}>
+              <div style={{position: 'absolute', paddingLeft: 100, height: 100, width: '100%'}}>
+                <CircularProgress size={50} className={classes.spinner} size={30} />
+              </div>
+            </Grid>
+        </Grid>
+      </Grid>
     );
   }
 

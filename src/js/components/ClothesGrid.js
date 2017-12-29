@@ -80,7 +80,7 @@ class ClothesGrid extends React.Component {
     return (
       <Grid container alignItems="center" className={classes.root}>
         {/* doing first fetch */}
-        { this.props.fetch === 1  && this.props.isFetching ? this.showLoadingIcon() : this.showCards() }
+        { this.props.fetch === 1  && this.props.isFetching ? <p></p> : this.showCards() }
         {this.props.errorFetching ? this.showErrorText() : <p></p> }
       </Grid>
     );
