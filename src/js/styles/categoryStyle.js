@@ -5,6 +5,6 @@ export default theme => ({
   },
   formControl: {
     margin: theme.spacing.unit,
-    minWidth: 200,
+    width: '100%',
   },
 });

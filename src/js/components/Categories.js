@@ -11,6 +11,7 @@ import styles from '../styles/categoryStyle'
 import { CircularProgress } from 'material-ui/Progress';
 import { activeCategoryChanged } from '../actions/actions'
 import Typography from 'material-ui/Typography/Typography';
+import Grid from 'material-ui/Grid/Grid';
 
 class Categories extends React.Component {
   constructor(props){
@@ -49,31 +50,44 @@ class Categories extends React.Component {
   showCategoriesDropdown(){
     const { classes } = this.props;
     return (
-      <div>
-      <form className={classes.container}>
-        <FormControl className={classes.formControl}>
-          <InputLabel htmlFor="cat-inp">Category</InputLabel>
-          <Select
-            value={this.state.categoryValue}
-            onChange={this.handleChange}
-            input={<Input name="categoryValue" id="cat-inp" />}
-            disabled={this.props.errorFetching}
-            error={this.props.errorFetching}
-            renderValue={value => this.props.errorFetching ? 'Error!' : 'Pick a category' }
-          >
-            <MenuItem key='all' value="all">All</MenuItem>
-            {
-              this.props.categories.map(category => <MenuItem key={category.id} value={category.id}>{category.name}</MenuItem>)
-            }
-          </Select>
-          <FormHelperText>{this.props.errorFetching ? 'Please check network connection' : 
-          'Re-click to unselect a category' }</FormHelperText>
-        </FormControl>
-      </form>
-      <Typography type="display2">
-        Now showing {this.getCategoryName(this.props.activeCategoryId)}
-      </Typography>
-      </div>
+      <Grid item xs={12}>
+        <Grid container justify="center" spacing={Number(40)}>
+            <Grid item xs={12} sm={4}>
+              <form className={classes.container}>
+                <FormControl className={classes.formControl}>
+                  <InputLabel htmlFor="cat-inp">Category</InputLabel>
+                  <Select
+                    value={this.state.categoryValue}
+                    onChange={this.handleChange}
+                    input={<Input name="categoryValue" id="cat-inp" />}
+                    disabled={this.props.errorFetching}
+                    error={this.props.errorFetching}
+                    renderValue={value => this.props.errorFetching ? 'Error!' : 'What do you prefer?' }
+                  >
+                    <MenuItem key='all' value="all">All</MenuItem>
+                    {
+                      this.props.categories.map(category => <MenuItem key={category.id} value={category.id}>{category.name}</MenuItem>)
+                    }
+                  </Select>
+                  <FormHelperText>{this.props.errorFetching ? 'Please check network connection' : 
+                  'Click to select a category' }</FormHelperText>
+                </FormControl>
+              </form>
+            </Grid>
+        </Grid>
+        <Grid container justify="center" spacing={Number(40)}>
+            <Grid item xs={12} sm={4}>
+              <Typography
+                type="subheading"
+                align="center"
+                style={{marginBottom: 23}}
+                gutterBottom
+                >
+                Now showing <span style={{color: 'ed145b'}}>{this.getCategoryName(this.props.activeCategoryId)}</span>
+              </Typography>
+            </Grid>
+        </Grid>
+      </Grid>
     );
   }
 
