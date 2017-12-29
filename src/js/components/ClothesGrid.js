@@ -20,18 +20,11 @@ class ClothesGrid extends React.Component {
     }
   }
   componentDidMount(){
-    console.log('component mounting');
     window.addEventListener('scroll', _.throttle(this.handleScroll, 1000));
   }
 
-  componentWillUnmount(){
-    console.log('component unmounting');    
+  componentWillUnmount(){   
     window.removeEventListener('scroll', _.throttle(this.handleScroll, 1000));
-  }
-
-  componentDidUpdate(){
-    console.log('fetch: ', this.state.fetch);
-    console.log('component updating');  
   }
 
   showCards() {   
