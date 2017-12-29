@@ -16,7 +16,7 @@ class ClothesGrid extends React.Component {
     this.handleScroll = this.handleScroll.bind(this);
     this.state = {
       alreadyFetchedExtraImages: props.alreadyFetchedExtraImages,
-      fetch: 0,
+      fetch: this.props.currentPage,
     }
   }
   componentDidMount(){
@@ -30,6 +30,7 @@ class ClothesGrid extends React.Component {
   }
 
   componentDidUpdate(){
+    console.log('fetch: ', this.state.fetch);
     console.log('component updating');  
   }
 
@@ -85,7 +86,7 @@ class ClothesGrid extends React.Component {
     return (
       <Grid container alignItems="center" className={classes.root}>
         {/* doing first fetch */}
-        { this.state.fetch === 0  && this.props.isFetching ? this.showLoadingIcon() : this.showCards() }
+        { this.props.fetch === 1  && this.props.isFetching ? this.showLoadingIcon() : this.showCards() }
         {this.props.errorFetching ? this.showErrorText() : <p></p> }
       </Grid>
     );
