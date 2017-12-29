@@ -33,26 +33,28 @@ export const errorFetchingPosts = () => {
   }
 }
 
-export const finishFecthingPosts = (posts, activeCategory) => {
+export const finishFecthingPosts = (posts, activeCategory, page) => {
   return {
     type: actionTypes.FINISH_FETCHING_POSTS,
     posts,
     activeCategory,
+    page,
   }
 }
 
-export const showPostsFromThisCategory = (category) => {
+export const showPostsFromThisCategory = (category, page, updating = false) => {
   return (dispatch) => {
     dispatch(fetchingPosts());
     // fetch posts async
     const postsEndpoint = urljoin(config.apiUrl, apiConstants.endpoints.posts);
-    const params = category === 'all' ? {per_page: 9} : {per_page: 9, categories: category}
+    const params = category === 'all' ? {per_page: 12, page} : {per_page: 12, categories: category, page}
     callEndpoint(postsEndpoint, params).then((postsOrError) =>{
       if (postsOrError.message && postsOrError.message === 'whoopsy'){
         dispatch(errorFetchingPosts());
       } else {
         const posts = postsOrError;
-        dispatch(finishFecthingPosts(posts, category));
+        console.log(posts);
+        updating ? dispatch(finishFetchingConsequentPages(posts, page)) : dispatch(finishFecthingPosts(posts, category, page));
       }
     });
   }
@@ -79,7 +81,21 @@ export const finishFetchCategories = (categories) => {
 
 export const activeCategoryChanged = (newCategory) => {
   return (dispatch) => {
-    dispatch(showPostsFromThisCategory(newCategory));
+    dispatch(showPostsFromThisCategory(newCategory, 1));
+  }
+}
+
+export const fetchConsequentPages = (currentCategory, currentPage) => {
+  return (dispatch) => {
+    dispatch(showPostsFromThisCategory(currentCategory, ++currentPage, true));
+  }
+}
+
+export const finishFetchingConsequentPages = (posts, page) => {
+  return {
+    type: actionTypes.FINISH_FETCHING_CONSEQUENT,
+    posts,
+    page,
   }
 }
 
