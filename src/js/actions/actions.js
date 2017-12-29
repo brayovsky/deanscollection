@@ -5,22 +5,6 @@ import urljoin from 'url-join';
 import apiConstants from '../constants/api'
 import categories from '../reducers/categories';
 
-export const viewNextPage = (currentPage) => {
-  return {
-    type: actionTypes.VIEW_NEXT_PAGE,
-    prevPage: currentPage,
-    nextPage: ++currentPage,
-  }
-};
-
-export const viewPreviousPage = (currentPage) => {
-  return {
-    type: actionTypes.VIEW_PREV_PAGE,
-    nextPage: currentPage,
-    prevPage: --currentPage,
-  }
-};
-
 export const fetchingPosts = () => {
   return {
     type: actionTypes.FETCHING_POSTS,
