@@ -9,6 +9,8 @@ import { CircularProgress } from 'material-ui/Progress';
 import Card from 'material-ui/Card/Card';
 import Clothe from './Clothe';
 import { fetchConsequentPages } from '../actions/actions';
+import CardContent from 'material-ui/Card/CardContent';
+import Typography from 'material-ui/Typography/Typography';
 const _ = require('lodash');
 class ClothesGrid extends React.Component {
   constructor(props){
@@ -29,6 +31,20 @@ class ClothesGrid extends React.Component {
   showCards() {   
     const { posts } = this.props;
     const { classes } = this.props;
+    if(posts.length === 0) {
+      return (
+        <Grid item xs={12}>
+          <Grid container justify="center" spacing={Number(40)}>
+              <Grid item xs={12} sm={4}>
+                <Card>
+                  <CardContent>
+                    <Typography className={classes.infoText}> No posts found </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+          </Grid>
+        </Grid>)
+    }
     return (
       <Grid item xs={12}>
         <Grid container justify="center" spacing={Number(40)}>

@@ -8,4 +8,9 @@ export default theme => ({
   control: {
     padding: theme.spacing.unit * 2,
   },
+  infoText: {
+    marginBottom: 16,
+    fontSize: 14,
+    color: theme.palette.text.secondary,
+  },
 });
