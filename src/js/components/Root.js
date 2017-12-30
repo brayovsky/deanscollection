@@ -1,7 +1,15 @@
 import React, { Component } from 'react';
 import ClothesGrid from './ClothesGrid';
 import Categories from './Categories';
+import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
 
+const overrideStyles = {
+  typography: {
+    fontFamily: "\"Raleway\", \"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+  }
+};
+
+const theme = createMuiTheme(overrideStyles);
 class Root extends Component{
   constructor(props){
     super(props);
@@ -9,10 +17,12 @@ class Root extends Component{
 
   render(){
     return(
-      <div className="main">
-        <Categories />
-        <ClothesGrid />
-      </div>
+      <MuiThemeProvider theme={theme}>
+        <div className="main">
+          <Categories />
+          <ClothesGrid />
+        </div>
+      </MuiThemeProvider>
     );
   }
 };
