@@ -8,6 +8,7 @@ export default theme => ({
     width: '100%',
   },
   spinner: {
-    margin: `0 73px`,
+    margin: '0 73px',
+    color: '#ed145b',
   }
 });

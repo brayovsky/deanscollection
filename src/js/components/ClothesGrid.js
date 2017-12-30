@@ -47,7 +47,7 @@ class ClothesGrid extends React.Component {
   showLoadingIcon() {
     return (
       <div style={{position: 'absolute', paddingLeft: 100,}}>
-        <CircularProgress size={50} style={{position: 'absolute', left: '50%', top: '50%', marginTop: -12, marginBottom: -12}} />
+        <CircularProgress size={50} style={{position: 'absolute', left: '50%', top: '50%', marginTop: -12, marginBottom: -12, color: '#ed145b'}} />
       </div>
     );
   }

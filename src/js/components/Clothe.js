@@ -32,7 +32,7 @@ class Clothe extends React.Component{
   showLoadingIcon(){
     return (
       <div style={{height: 200}}>
-        <CircularProgress size={50} style={{position: 'absolute', marginLeft: '100px', marginTop: '43px'}} />
+        <CircularProgress size={50} style={{position: 'absolute', marginLeft: '100px', marginTop: '43px', color: '#ed145b'}} />
       </div>
     );
   }
