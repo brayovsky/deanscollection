@@ -13,6 +13,7 @@ import { activeCategoryChanged } from '../actions/actions'
 import Typography from 'material-ui/Typography/Typography';
 import Grid from 'material-ui/Grid/Grid';
 import {withRouter} from "react-router-dom"
+import { Stream } from 'stream';
 
 class Categories extends React.Component {
   constructor(props){
@@ -25,8 +26,7 @@ class Categories extends React.Component {
 
   handleChange = event => {
     this.setState({ [event.target.name]: event.target.name });
-    const nextCategory = this.props.categories.filter(category => category.id === event.target.value)[0];
-    const nextCategoryName = nextCategory.name;
+    const nextCategoryName = this.getCategoryName(String(event.target.value));
     this.props.history.push(nextCategoryName);
     this.props.onChangeCategory(event.target.value);
   };
@@ -51,9 +51,7 @@ class Categories extends React.Component {
       return 'all';
     }
     const activeCategory = this.props.categories.filter((category) => {
-      if(String(category.id) === id){
-        return true
-      }
+      return String(category.id) === id;
     });
     return activeCategory[0].name;
   }
