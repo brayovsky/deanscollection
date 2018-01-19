@@ -21,7 +21,7 @@ ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
       <div>
-        <Route path='/' component={Root}/>
+        <Route path='/:category?' component={Root}/>
       </div>
     </BrowserRouter>
   </Provider>,

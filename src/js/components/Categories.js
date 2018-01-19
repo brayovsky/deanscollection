@@ -12,6 +12,7 @@ import { CircularProgress } from 'material-ui/Progress';
 import { activeCategoryChanged } from '../actions/actions'
 import Typography from 'material-ui/Typography/Typography';
 import Grid from 'material-ui/Grid/Grid';
+import {withRouter} from "react-router-dom"
 
 class Categories extends React.Component {
   constructor(props){
@@ -24,6 +25,9 @@ class Categories extends React.Component {
 
   handleChange = event => {
     this.setState({ [event.target.name]: event.target.name });
+    const nextCategory = this.props.categories.filter(category => category.id === event.target.value)[0];
+    const nextCategoryName = nextCategory.name;
+    this.props.history.push(nextCategoryName);
     this.props.onChangeCategory(event.target.value);
   };
 
@@ -123,7 +127,7 @@ Categories.defaultProps = {
   
 const mapDispatchToProps = (dispatch) => {
   return {
-    onChangeCategory: (newCategory) => {dispatch(activeCategoryChanged(newCategory))}
+    onChangeCategory: (newCategory) => {dispatch(activeCategoryChanged(newCategory))} // Push into history
   }
 };
 
@@ -136,4 +140,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(Categories));
+export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(withRouter(Categories)));
