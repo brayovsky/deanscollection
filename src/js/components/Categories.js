@@ -47,7 +47,7 @@ class Categories extends React.Component {
   }
 
   getCategoryName(id) {
-    if (id === 'all' || id === 'undefined'){
+    if (id === 'all' || id === undefined){
       return 'all';
     }
     const activeCategory = this.props.categories.filter((category) => {
@@ -92,7 +92,7 @@ class Categories extends React.Component {
                 style={{marginBottom: 23}}
                 gutterBottom
                 >
-                Now showing <span style={{color: 'ed145b'}}>{this.props.activeCategory}</span>
+                Now showing <span style={{color: 'ed145b'}}>{this.getCategoryName(this.props.activeCategoryId)}</span>
               </Typography>
             </Grid>
         </Grid>
@@ -115,10 +115,12 @@ Categories.propTypes = {
   categories: PropTypes.arrayOf(PropTypes.object).isRequired,
   classes: PropTypes.object.isRequired,
   onChangeCategory: PropTypes.func,
+  activeCategoryId: PropTypes.string,
 };
   
 Categories.defaultProps = {
   categories: [{}],
+  activeCategoryId: 'all',
 };
   
 const mapDispatchToProps = (dispatch) => {

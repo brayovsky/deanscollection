@@ -22,13 +22,10 @@ class Root extends Component {
   }
 
   getCategoryId(categoryName) {
-    if (categoryName === 'all' || categoryName === 'undefined'){
-      return 'all';
-    }
     const relevantCategory = this.props.categories.filter((category) => {
       return category.name === categoryName;
     })[0];
-    return relevantCategory.id;
+    return relevantCategory ? relevantCategory.id : 'all';
   };
 
   fetchInitialImages() {
@@ -47,7 +44,7 @@ class Root extends Component {
     return (
       <MuiThemeProvider theme={theme}>
         <div className="main">
-          <Categories activeCategory={this.props.match.params.category || 'all'}/>
+          <Categories activeCategoryId={String(this.getCategoryId(this.props.match.params.category))}/>
           <ClothesGrid />
         </div>
       </MuiThemeProvider>
