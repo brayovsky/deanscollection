@@ -92,7 +92,7 @@ class Categories extends React.Component {
                 style={{marginBottom: 23}}
                 gutterBottom
                 >
-                Now showing <span style={{color: 'ed145b'}}>{this.getCategoryName(this.props.activeCategoryId)}</span>
+                Now showing <span style={{color: 'ed145b'}}>{this.props.activeCategory}</span>
               </Typography>
             </Grid>
         </Grid>
@@ -105,7 +105,7 @@ class Categories extends React.Component {
       <div>
           {
             this.props.isFetching ? this.showLoadingIcon() : this.showCategoriesDropdown()
-          }  
+          }
       </div>
     );
   }
@@ -115,17 +115,15 @@ Categories.propTypes = {
   categories: PropTypes.arrayOf(PropTypes.object).isRequired,
   classes: PropTypes.object.isRequired,
   onChangeCategory: PropTypes.func,
-  activeCategoryId: PropTypes.string.isRequired,
 };
   
 Categories.defaultProps = {
   categories: [{}],
-  activeCategoryId: 'all',
 };
   
 const mapDispatchToProps = (dispatch) => {
   return {
-    onChangeCategory: (newCategory) => {dispatch(activeCategoryChanged(newCategory))} // Push into history
+    onChangeCategory: (newCategory) => {dispatch(activeCategoryChanged(newCategory))}
   }
 };
 
@@ -134,7 +132,6 @@ const mapStateToProps = (state) => {
     categories: state.categories.allCategories,
     isFetching: state.categories.isFetching,
     errorFetching: state.categories.errorFetching,
-    activeCategoryId: String(state.posts.activeCategory),
   };
 };
 

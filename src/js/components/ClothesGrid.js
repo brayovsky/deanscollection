@@ -12,6 +12,7 @@ import { fetchConsequentPages } from '../actions/actions';
 import CardContent from 'material-ui/Card/CardContent';
 import Typography from 'material-ui/Typography/Typography';
 const _ = require('lodash');
+
 class ClothesGrid extends React.Component {
   constructor(props){
     super(props);
@@ -20,6 +21,7 @@ class ClothesGrid extends React.Component {
       fetch: props.currentPage,
     }
   }
+
   componentDidMount(){
     window.addEventListener('scroll', _.throttle(this.handleScroll, 1000));
   }
