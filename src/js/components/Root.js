@@ -19,6 +19,9 @@ class Root extends Component {
     super(props);
     this.fetchInitialImages = this.fetchInitialImages.bind(this);
     this.getCategoryId = this.getCategoryId.bind(this);
+    this.state = {
+      category: window.location.hash.split('#')[1],
+    }
   }
 
   getCategoryId(categoryName) {
@@ -32,7 +35,7 @@ class Root extends Component {
     // get category from categories
     if(this.props.categories.length < 2)
       return;
-    const categoryId = this.getCategoryId(this.props.match.params.category);
+    const categoryId = this.getCategoryId(this.state.category);
     this.props.fetchInitialImages(categoryId);
   };
 
@@ -44,7 +47,7 @@ class Root extends Component {
     return (
       <MuiThemeProvider theme={theme}>
         <div className="main">
-          <Categories activeCategoryId={String(this.getCategoryId(this.props.match.params.category))}/>
+          <Categories activeCategoryId={String(this.getCategoryId(this.state.category))}/>
           <ClothesGrid />
         </div>
       </MuiThemeProvider>
