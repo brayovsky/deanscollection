@@ -27,7 +27,7 @@ class Categories extends React.Component {
   handleChange = event => {
     this.setState({ [event.target.name]: event.target.name });
     const nextCategoryName = this.getCategoryName(String(event.target.value));
-    this.props.history.push(nextCategoryName);
+    this.props.history.push(`#${nextCategoryName}`);
     this.props.onChangeCategory(event.target.value);
   };
 
